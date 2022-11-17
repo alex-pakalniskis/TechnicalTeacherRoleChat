@@ -40,25 +40,15 @@ query OpenAllocationsOld {
 
 ## Automate dynamic query with some Python scripting
 
-1. Open terminal
-1. Create a new directory and change into it
-    ``` bash
-    mkdir tech_teach_role_chat && cd tech_teach_role_chat
-    ```
-1. Create some files for our mini app
-    ``` bash
-    touch query.py utils.py app.py 
-    ```
-1. Open VSCode from within the folder
-    ``` bash
-    code .
-    ```
-1. Update `query.py` with the following code
-    * We're converting our GraphQL queries into Python string Templates
-    * This will help us make dynamic GraphQL queries
+1. Please open a new Python Jupyter Notebook in your Google Drive: https://colab.research.google.com/#create=true
+1. In a new code cell, kindly import the libraries we'll be using today
     ``` python
+    import requests
     from string import Template
+    ```
     
+1. In a new code cell, please define two functions to recreate our GraphQL subgraph queries
+    ``` python
     def get_current_epoch():
       query = Template("""
       {
@@ -91,5 +81,5 @@ query OpenAllocationsOld {
         )
     ```
 
-
+1. 
 
