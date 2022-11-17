@@ -84,7 +84,7 @@ query OpenAllocationsOld {
 
 1. In the same code cell as the other functions, kindly define a third function that submits a generic GraphQL query to the `graph-network-mainnet` hosted subgraph.
     * We'll be able to pass either of the previous queries we've already defined as input
-    * You could further parameterize this function to take a generic hosted subgraph as input, maybe next time ;D )
+    * You could further parameterize this function to take a generic hosted subgraph as input
     ``` python
     def get_data(query):
       response = requests.post('https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet'
