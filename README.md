@@ -25,8 +25,8 @@ Very old allocations threshold: CurrentEpoch - ( 5 * maxAllocationEpochs)
 
 ```gql
 query OpenAllocationsOld {
-  allocations(where:,{createdAtEpoch_lt:543}) {
-    id,
+  allocations(where:{createdAtEpoch_lt:543}) {
+    id
     createdAtEpoch
     allocatedTokens
     poi
@@ -65,7 +65,7 @@ query OpenAllocationsOld {
       query = Template("""
       {
         allocations(where: {createdAtEpoch_lt:$oldest_epoch},) {
-          id,
+          id
           createdAtEpoch
           allocatedTokens
           poi
@@ -96,7 +96,7 @@ query OpenAllocationsOld {
       if response.status_code == 200: 
           return response.json()["data"]
       else:
-          raise Exception(f"Query failed with return code {response.staus_code}")
+          raise Exception(f"Query failed with return code {response.status_code}")
     ```
 
 1. In the same code cell, please define one last function that automates our oldest allowable epoch logic
@@ -113,11 +113,20 @@ query OpenAllocationsOld {
     current_epoch = int(get_data(get_current_epoch())["epoches"][0]["id"])
     oldest_epoch = oldest_allowable_epoch(current_epoch, max_allocation_epochs)
     old_allocations = get_data(get_old_allocations(oldest_epoch))["allocations"]
+    old_allocations
     ```
 
 1. Let's convert the Python dictionary into a pandas DataFrame (basically a spreadsheet) so it's easier to view the data
     ``` python
     df = pd.DataFrame.from_dict(old_allocations)
+    df
+    ```
+
+1. Finally, let's do a bit of data cleaning to extract indexer IDs and defaultDisplayNames
+    ``` python
+    df["indexer_id"] = df["indexer"].apply(pd.Series)["id"]
+    df["indexer_defaultDisplayName"] = df["indexer"].apply(pd.Series)["defaultDisplayName"]
+    df.drop(columns=["indexer"], inplace=True)
     df
     ```
 
