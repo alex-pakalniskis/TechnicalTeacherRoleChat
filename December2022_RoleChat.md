@@ -1,9 +1,22 @@
-## Subgraph query
+## Subgraph queries
 
 ``` gql
 query CurrentEpoch {
   epoches(orderBy: startBlock, orderDirection: desc, first: 1) {
     id
+  }
+}
+```
+
+``` gql
+query OldAllocations {
+  allocations(where:{createdAtEpoch_lt:<replace value with Current Epoch - 28>}) {
+    id
+    createdAtEpoch
+    allocatedTokens
+    indexer {
+      id
+    }
   }
 }
 ```
@@ -38,24 +51,48 @@ struct Epoch {
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
-struct Data {
+struct EpochData {
     epoches: Vec<Epoch>,
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
-struct Response {
-    data: Data,
+struct EpochResponse {
+    data: EpochData,
 }
+
+#[derive(Debug, Deserialize, PartialEq)]
+struct Indexer {
+    id: String,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+struct Allocation {
+    id: String,
+    createdAtEpoch: u32,
+    allocatedTokens: String,
+    indexer: Indexer,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+struct AllocationsData {
+    allocations: Vec<Allocation>,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+struct AllocationsResponse {
+    data: AllocationsData,
+}
+
 
 #[tokio::main]
 async fn main() -> Result<(), reqwest::Error> {
-    let subgraph_query = "{epoches(orderBy: startBlock, orderDirection: desc, first: 1) {id}}";
+    let epoch_subgraph_query = "{epoches(orderBy: startBlock, orderDirection: desc, first: 1) {id}}";
     let subgraph_url = "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet";
     
     let mut map = HashMap::new();
-    map.insert("query", subgraph_query);
+    map.insert("query", epoch_subgraph_query);
 
-    let res: Response = reqwest::Client::new()
+    let epoch_res: EpochResponse = reqwest::Client::new()
     .post(subgraph_url)
     .json(&map)
     .send()
@@ -63,7 +100,25 @@ async fn main() -> Result<(), reqwest::Error> {
     .json()
     .await?;
 
-    println!("The current epoch is {}", res.data.epoches[0].id);
+    let current_epoch = epoch_res.data.epoches[0].id.parse::<i32>().unwrap();
+    let oldest_allowable_epoch = current_epoch - 28;
+    
+    let allocations_subgraph_query = format!("{{ allocations(where:{{ createdAtEpoch_lt:{} }}) {{ id createdAtEpoch allocatedTokens indexer {{ id }} }} }}", oldest_allowable_epoch);
+    
+    let mut map = HashMap::new();
+    map.insert("query", allocations_subgraph_query);
+
+    let allocations_res: AllocationsResponse = reqwest::Client::new()
+    .post(subgraph_url)
+    .json(&map)
+    .send()
+    .await?
+    .json()
+    .await?;
+
+    for allo in allocations_res.data.allocations {
+        println!("{}: created at epoch {}", allo.id, allo.createdAtEpoch );
+    }
 
     Ok(())
 }
