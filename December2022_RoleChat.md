@@ -68,7 +68,7 @@ struct Indexer {
 #[derive(Debug, Deserialize, PartialEq)]
 struct Allocation {
     id: String,
-    createdAtEpoch: u32,
+    createdAtEpoch: i32,
     allocatedTokens: String,
     indexer: Indexer,
 }
@@ -117,7 +117,7 @@ async fn main() -> Result<(), reqwest::Error> {
     .await?;
 
     for allo in allocations_res.data.allocations {
-        println!("{}: created at epoch {}", allo.id, allo.createdAtEpoch );
+        println!("{}: {} epoches old", allo.id, current_epoch - allo.createdAtEpoch );
     }
 
     Ok(())
