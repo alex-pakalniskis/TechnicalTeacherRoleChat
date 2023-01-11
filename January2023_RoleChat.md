@@ -2,13 +2,29 @@
 
 ## Open a terminal
 
-`ctrl + alt + T`
+* `ctrl + alt + T`
 
 ## Create and manipulate folders and files
 ### `ls`
+
+* `ls`
+* `ls -la`
+* `ls code`
+
 ### `mkdir`
+
+* `mkdir jan2023_rolechat`
+* `mkdir jan2023_rolechat/nested_folder`
+* `ls`
+* `ls jan2023_rolechat`
+
 ### `cd`
-`mkdir && cd`
+
+* `cd jan2023_rolechat`
+* `mkdir another_nested && cd another_nested`
+* `ls`
+* `cd ..`
+
 ### `touch`
 ### `git`
 ### `nano`
