@@ -31,7 +31,12 @@
 * `touch another_nested/yetanotherfile.rs`
 
 ### `git`
+* `git clone https://github.com/alex-pakalniskis/TechnicalTeacherRoleChat.git`
+
+
 ### `nano`
+* `nano open_this_file_with_nano.txt`
+
 ### `cp`
 ### `mv`
 ### `cat`
