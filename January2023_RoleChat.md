@@ -38,8 +38,14 @@
 * `nano open_this_file_with_nano.txt`
 
 ### `cp`
+* `cp open_this_file_with_nano.txt copied_with_cp.txt`
+
 ### `mv`
+* `mv copied_with_cp.txt moved_with_mv.txt`
+
 ### `cat`
+* `cat open_this_file_with_nano.txt`
+
 ### `echo`
 ### `>`
 ### `|`
