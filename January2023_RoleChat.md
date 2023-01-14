@@ -26,6 +26,10 @@
 * `cd ..`
 
 ### `touch`
+* `touch somefile`
+* `touch anotherfile.txt`
+* `touch another_nested/yetanotherfile.rs`
+
 ### `git`
 ### `nano`
 ### `cp`
