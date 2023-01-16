@@ -47,27 +47,8 @@
 #### `cat`
 * `cat open_this_file_with_nano.txt`
 
-## Part 2: Coming next month
-### More creating and manipulating folders and files
-#### `echo`
-#### `>`
-#### `|`
-#### `rm`
-#### `curl`
-#### `wget`
-#### `tar`
-#### `chmod`
-#### `chown`
-
-### Create and manage user permissions
-#### `whoami`
-#### `adduser`
-#### `usermod`
-#### `su`
-
-### Miscellaneous
-#### `sudo !!`
-
+## Part 2
+Coming next month
 
 ## References
 * https://ubuntu.com/tutorials/command-line-for-beginners#1-overview
