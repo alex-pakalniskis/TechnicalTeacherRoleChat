@@ -1,4 +1,6 @@
 # Intro to Linux Terminal
+Run locally or with Killercoda: https://killercoda.com/playgrounds/scenario/ubuntu
+
 ## Part 1
 
 ### Open a terminal
